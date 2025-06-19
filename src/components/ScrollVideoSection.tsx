@@ -21,7 +21,6 @@ export default function ScrollVideoSection({
   const containerRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [currentTime, setCurrentTime] = useState(0)
-  const [scrollHeight, setScrollHeight] = useState(1100)
 
   useEffect(() => {
     const video = videoRef.current
@@ -33,7 +32,6 @@ export default function ScrollVideoSection({
     const onLoadedMetadata = () => {
       const duration = video.duration
       const calculatedHeight = duration * scrollSpeed
-      setScrollHeight(calculatedHeight)
 
       // Kill existing ScrollTrigger (important!)
       ScrollTrigger.getAll().forEach(t => t.kill())

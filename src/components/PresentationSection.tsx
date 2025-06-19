@@ -3,8 +3,6 @@
 import { useEffect, useRef, useState } from 'react'
 import Navbar from './Navbar'
 import { AnimatePresence, motion } from 'framer-motion'
-import ScrollVideoSection from './ScrollVideoSection'
-import Overlay from './Overlay'
 import BeforeSection from './BeforeSection'
 import DuringSection from './DuringSection'
 import AfterSection from './AfterSection'
