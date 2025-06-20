@@ -1,11 +1,13 @@
 import HeroSection from '@/components/HeroSection'
 import PresentationSection from '@/components/PresentationSection'
+import AppWrapper from '@/components/AppWrapper'
 
 export default function HomePage() {
   return (
-    <div className="bg-gray-900 text-white">
+    <AppWrapper>
       <HeroSection />
       <PresentationSection />
-    </div>
+    </AppWrapper>
+
   )
 }

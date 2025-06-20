@@ -7,36 +7,37 @@ export type OverlayProps = {
   appear: number
   disappear?: number
   currentTime?: number
-  align?: 'top' | 'bottom' | 'left' | 'right' | 'center' | 
-          'top left' | 'top right' | 'bottom left' | 'bottom right'
+  align?:
+    | 'top'
+    | 'bottom'
+    | 'left'
+    | 'right'
+    | 'center'
+    | 'top left'
+    | 'top right'
+    | 'bottom left'
+    | 'bottom right'
   className?: string
   children: ReactNode
 }
 
 function getPositionClass(align?: string): string {
-  switch (align) {
-    case 'top':
-      return 'inset-0 flex items-center justify-center md:top-10 md:left-1/2 md:-translate-x-1/2 md:inset-auto md:flex-none'
-    case 'bottom':
-      return 'inset-0 flex items-center justify-center md:bottom-10 md:left-1/2 md:-translate-x-1/2 md:inset-auto md:flex-none'
-    case 'left':
-      return 'inset-0 flex items-center justify-center md:left-10 md:top-1/2 md:-translate-y-1/2 md:inset-auto md:flex-none'
-    case 'right':
-      return 'inset-0 flex items-center justify-center md:right-10 md:top-1/2 md:-translate-y-1/2 md:inset-auto md:flex-none'
-    case 'top left':
-      return 'inset-0 flex items-center justify-center md:top-10 md:left-10 md:inset-auto md:flex-none'
-    case 'top right':
-      return 'inset-0 flex items-center justify-center md:top-10 md:right-10 md:inset-auto md:flex-none'
-    case 'bottom left':
-      return 'inset-0 flex items-center justify-center md:bottom-10 md:left-10 md:inset-auto md:flex-none'
-    case 'bottom right':
-      return 'inset-0 flex items-center justify-center md:bottom-10 md:right-10 md:inset-auto md:flex-none'
-    case 'center':
-    default:
-      return 'inset-0 flex items-center justify-center'
-  }
-}
+  const base = 'absolute p-4 sm:p-6 md:p-8 max-w-md w-full'
 
+  const map: Record<string, string> = {
+    top: 'top-6 left-1/2 -translate-x-1/2',
+    bottom: 'bottom-6 left-1/2 -translate-x-1/2',
+    left: 'left-6 top-1/2 -translate-y-1/2',
+    right: 'right-6 top-1/2 -translate-y-1/2',
+    center: 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
+    'top left': 'top-6 left-6',
+    'top right': 'top-6 right-6',
+    'bottom left': 'bottom-6 left-6',
+    'bottom right': 'bottom-6 right-6',
+  }
+
+  return `${base} ${map[align ?? 'center'] || map['center']}`
+}
 
 export default function Overlay({
   appear,
@@ -59,9 +60,11 @@ export default function Overlay({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.4 }}
-          className={`absolute ${getPositionClass(align)} ${className}`}
+          className={`${getPositionClass(align)} ${className} z-50 backdrop-blur-sm bg-black/70 text-white rounded-xl shadow-lg`}
         >
-          {children}
+          <div className="text-center space-y-3 text-sm sm:text-base md:text-lg leading-relaxed">
+            {children}
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
