@@ -14,15 +14,16 @@ export default function LoadingOverlay({ text = 'Loading...' }: Props) {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="fixed inset-0 z-[9999] bg-black text-white flex items-center justify-center flex-col gap-4"
+          className="fixed inset-0 z-[9999] bg-black text-white flex items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.4, delay: 0.05 }}
         >
-
-        <p className="text-2xl font-semibold">{text}</p>
-        <div className="w-24 h-1 bg-white animate-pulse mx-auto" />        
+          <div className="text-center space-y-4">
+            <p className="text-lg font-semibold">{text}</p>
+            <div className="w-24 h-1 bg-white animate-pulse mx-auto" />
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

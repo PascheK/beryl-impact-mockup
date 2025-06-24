@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Navbar from './Navbar'
 import BeforeSection from './before/BeforeSection'
@@ -11,23 +11,11 @@ import { useLoadingOverlay } from '@/context/LoadingOverlayContext'
 export default function PresentationSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const lastSelected = useRef<'before' | 'during' | 'after' | null>(null)
-  const [inView, setInView] = useState(false)
-  const [selected, setSelected] = useState<'before' | 'during' | 'after' | null>(null)
-  const isProgrammaticScroll = useRef(false)
-
+  const [selected, setSelected] = useState<'before' | 'during' | 'after' | null>('before')
+  const [canChangeSection, setCanChangeSection] = useState(true)
+  const [isNavbarChanged, setIsNavbarChanged] = useState(false)
   const { show, hide } = useLoadingOverlay()
-  const navbarVisible = inView || selected !== null
 
-  // Observe the main section to toggle navbar visibility
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.5 }
-    )
-
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
 
   // Determines whether we're moving forward or backward in section flow
   function getScrollDirection(
@@ -41,35 +29,46 @@ export default function PresentationSection() {
 
   // Handles scroll and overlay transition after section animation
   const handleAfterAnimate = () => {
-    if (!selected) return
+    if (!lastSelected.current) {
+      console.log('No last selected section, showing overlay');
+      show();
+      document.body.style.overflow = 'hidden'
+      lastSelected.current = selected;
+      setTimeout(() => {
+        hide();
+        document.body.style.overflow = '' // Restore scroll
+      }, 1600);
+    } else {
+      if (!selected) return;
+      const direction = !isNavbarChanged ? getScrollDirection(lastSelected.current, selected) : 'forward';
+      const target = document.getElementById(`${selected}-section`);
+      lastSelected.current = selected;
 
-    const direction = getScrollDirection(lastSelected.current, selected)
-    const target = document.getElementById(`${selected}-section`)
-    lastSelected.current = selected
+      if (!target) return;
 
-    if (!target) return
+      show(); // Affiche l'overlay
+      document.body.style.overflow = 'hidden'
 
-    isProgrammaticScroll.current = true
-    show() // Show loading overlay
-
-    // Wait for fade-in (loader transition)
-    setTimeout(() => {
-      hide() // Hide loader
-
-      // Delay before scrolling to ensure DOM is updated
+      // Attends un peu pour que l'overlay apparaisse avant de scroller
       setTimeout(() => {
         target.scrollIntoView({
           behavior: 'smooth',
           block: direction === 'forward' ? 'start' : 'end',
-        })
-      }, 200)
+        });
 
-      // Disable programmatic scroll flag after 5 seconds
-      setTimeout(() => {
-        isProgrammaticScroll.current = false
-      }, 5000)
-    }, 600) // Total duration of the transition overlay
-  }
+        // Cache l'overlay après un délai suffisant pour couvrir le scroll
+        setTimeout(() => {
+          hide();
+          setIsNavbarChanged(false);
+          setCanChangeSection(true);
+          document.body.style.overflow = '' // Restore scroll
+
+        }, 1600); // ajuste en fonction de ton scroll/transition
+      }, 100); // petit délai pour éviter le "flash"
+    }
+
+  };
+
 
   return (
     <section ref={sectionRef} className="relative">
@@ -86,21 +85,40 @@ export default function PresentationSection() {
           >
             {selected === 'before' && (
               <BeforeSection
-                isProgrammaticScroll={isProgrammaticScroll}
-                onNext={() => setSelected('during')}
+                onNext={() => {
+                  if (!canChangeSection) return;
+                  document.body.style.overflow = 'hidden'
+                  setCanChangeSection(false);
+                  setSelected('during')
+                }}
               />
             )}
             {selected === 'during' && (
               <DuringSection
-                isProgrammaticScroll={isProgrammaticScroll}
-                onNext={() => setSelected('after')}
-                onBack={() => setSelected('before')}
+                onNext={() => {
+                  if (!canChangeSection) return;
+                  console.log('during - after', canChangeSection)
+                  document.body.style.overflow = 'hidden'
+                  setCanChangeSection(false);
+                  setSelected('after')
+                }}
+                onBack={() => {
+                  if (!canChangeSection) return;
+                  document.body.style.overflow = 'hidden'
+                  setCanChangeSection(false);
+                  setSelected('before')
+                }}
               />
             )}
             {selected === 'after' && (
               <AfterSection
-                isProgrammaticScroll={isProgrammaticScroll}
-                onBack={() => setSelected('during')}
+                onBack={() => {
+                  if (!canChangeSection) return;
+                  console.log('adter - during', canChangeSection)
+                  document.body.style.overflow = 'hidden'
+                  setCanChangeSection(false);
+                  setSelected('during')
+                }}
               />
             )}
           </motion.div>
@@ -109,20 +127,18 @@ export default function PresentationSection() {
 
       {/* Bottom navbar with animated presence */}
       <AnimatePresence>
-        {navbarVisible && (
-          <motion.div
-            key="navbar"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            transition={{ duration: 0.4 }}
-            className="fixed bottom-2 left-0 w-full z-50 flex justify-center pointer-events-none"
-          >
-            <div className="pointer-events-auto">
-              <Navbar onSelect={setSelected} selected={selected} />
-            </div>
-          </motion.div>
-        )}
+        <motion.div
+          key="navbar"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 50 }}
+          transition={{ duration: 0.4 }}
+          className="fixed bottom-2 left-0 w-full z-50 flex justify-center pointer-events-none"
+        >
+          <div className="pointer-events-auto">
+            <Navbar onSelect={setSelected} selected={selected} canChangeSection={canChangeSection} onChangeSection={setCanChangeSection} onNavbarChanged={setIsNavbarChanged} />
+          </div>
+        </motion.div>
       </AnimatePresence>
     </section>
   )

@@ -1,28 +1,29 @@
+// Before/IntroSection.tsx
 'use client'
 
 import { motion } from 'framer-motion'
+import SectionHeader from '@/components/SectionHeader'
+import BulletPointCard from '@/components/BulletPointCard'
 
 export default function IntroSection() {
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 text-center bg-black text-white">
-      <motion.h2
-        className="text-5xl font-bold mb-6"
-        initial={{ opacity: 0, y: -40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-      >
-        Contexte de la catastrophe
-      </motion.h2>
-      <motion.p
-        className="max-w-3xl text-lg text-gray-300"
+    <section className="min-h-screen flex flex-col items-center justify-center p-12 text-center bg-white text-black">
+      <SectionHeader title="Preparedness Phase" />
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.4 }}
+        transition={{ duration: 0.6 }}
+        className="mt-8"
       >
-        En août 2023, une série de perturbations météorologiques a balayé la région, provoquant des inondations, des vents violents et des coupures de courant majeures. Malgré les alertes initiales, la population nl&apos;était pas suffisamment préparée à l’ampleur du phénomène.
-        <br /><br />
-        Ce projet immersif retrace les événements clés, les décisions prises en urgence et les conséquences humaines et matérielles de cette crise.
-      </motion.p>
+        <BulletPointCard
+          title="Pre-Landfall Actions"
+          points={[
+            'Evacuation plans activated in high-risk zones.',
+            'Emergency communication systems tested and deployed.',
+            'Critical infrastructure safeguarded against impact.'
+          ]}
+        />
+      </motion.div>
     </section>
   )
 }

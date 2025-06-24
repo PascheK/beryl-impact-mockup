@@ -8,35 +8,38 @@ export type OverlayProps = {
   disappear?: number
   currentTime?: number
   align?:
-    | 'top'
-    | 'bottom'
-    | 'left'
-    | 'right'
-    | 'center'
-    | 'top left'
-    | 'top right'
-    | 'bottom left'
-    | 'bottom right'
+  | 'top'
+  | 'bottom'
+  | 'left'
+  | 'right'
+  | 'center'
+  | 'top left'
+  | 'top right'
+  | 'bottom left'
+  | 'bottom right'
   className?: string
   children: ReactNode
 }
 
 function getPositionClass(align?: string): string {
-  const base = 'absolute p-4 sm:p-6 md:p-8 max-w-md w-full'
+  const base = 'absolute p-4 sm:p-6 w-full max-w-xs sm:max-w-md lg:max-w-xl flex flex-col items-center justify-center'
 
-  const map: Record<string, string> = {
-    top: 'top-6 left-1/2 -translate-x-1/2',
-    bottom: 'bottom-6 left-1/2 -translate-x-1/2',
-    left: 'left-6 top-1/2 -translate-y-1/2',
-    right: 'right-6 top-1/2 -translate-y-1/2',
+  const positionMap: Record<string, string> = {
+    top: 'top-4 left-1/2 -translate-x-1/2 sm:left-1/2',
+    bottom: 'bottom-14 left-1/2 -translate-x-1/2 sm:left-1/2',
+    left: 'top-1/2 left-4 -translate-y-1/2 sm:top-1/2',
+    right: 'top-1/2 right-4 -translate-y-1/2 sm:top-1/2',
     center: 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
-    'top left': 'top-6 left-6',
-    'top right': 'top-6 right-6',
-    'bottom left': 'bottom-6 left-6',
-    'bottom right': 'bottom-6 right-6',
+    'top left': 'top-4 left-1/2 -translate-x-1/2 sm:left-4 sm:translate-x-0',
+    'top right': 'top-4 left-1/2 -translate-x-1/2 sm:left-auto sm:right-4 sm:translate-x-0',
+    'bottom left': 'bottom-14 left-1/2 -translate-x-1/2 sm:left-4 sm:translate-x-0',
+    'bottom right': 'bottom-14 left-1/2 -translate-x-1/2 sm:left-auto sm:right-4 sm:translate-x-0',
   }
 
-  return `${base} ${map[align ?? 'center'] || map['center']}`
+
+  const alignment = align ?? 'center'
+
+  return `${base} ${positionMap[alignment] || positionMap['center']}`
 }
 
 export default function Overlay({
@@ -62,7 +65,7 @@ export default function Overlay({
           transition={{ duration: 0.4 }}
           className={`${getPositionClass(align)} ${className} z-50 backdrop-blur-sm bg-black/70 text-white rounded-xl shadow-lg`}
         >
-          <div className="text-center space-y-3 text-sm sm:text-base md:text-lg leading-relaxed">
+          <div className="text-center space-y-3 text-xs sm:text-sm md:text-base leading-relaxed">
             {children}
           </div>
         </motion.div>

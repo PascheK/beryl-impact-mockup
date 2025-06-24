@@ -1,26 +1,29 @@
+// Before/OutroSection.tsx
 'use client'
 
 import { motion } from 'framer-motion'
+import SectionHeader from '@/components/SectionHeader'
+import BulletPointCard from '@/components/BulletPointCard'
 
 export default function OutroSection() {
   return (
     <section className="min-h-screen flex flex-col items-center justify-center p-12 text-center bg-gray-100 text-black">
-      <motion.h3
-        className="text-3xl font-semibold mb-4"
+      <SectionHeader title="Preparedness Outcomes" />
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.6 }}
+        className="mt-8"
       >
-        Résilience par la Préparation
-      </motion.h3>
-      <motion.p
-        className="max-w-2xl text-lg"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.5 }}
-      >
-        Grâce à une planification proactive, les équipes disposent des outils nécessaires pour réagir rapidement et efficacement. La résilience ne s’improvise pas, elle se construit.
-      </motion.p>
+        <BulletPointCard
+          title="Impacts Mitigated"
+          points={[
+            'Timely evacuations reduced potential casualties.',
+            'Local authorities coordinated effectively before landfall.',
+            'Pre-deployment of resources ensured rapid crisis response.'
+          ]}
+        />
+      </motion.div>
     </section>
   )
 }
