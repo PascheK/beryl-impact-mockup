@@ -1,5 +1,5 @@
-import HeroSection from '@/components/HeroSection'
-import RecapSection from '@/components/RecapSection'
+import HeroSection from '@/sections/HeroSection'
+import RecapSection from '@/sections/RecapSection'
 import PresentationSection from '@/components/PresentationSection'
 
 export default function HomePage() {

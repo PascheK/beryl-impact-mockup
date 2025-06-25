@@ -2,8 +2,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import SectionHeader from '@/components/SectionHeader'
-import BulletPointCard from '@/components/BulletPointCard'
+import SectionHeader from '@/components/common/SectionHeader'
+import BulletPointCard from '@/components/common/BulletPointCard'
 
 export default function OutroSection() {
   return (
