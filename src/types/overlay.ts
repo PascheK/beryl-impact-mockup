@@ -14,5 +14,17 @@ export type OverlayAlign =
   | 'bottom left'
   | 'bottom right'
 
+import { ReactNode } from 'react'
+
 export type OverlayType = 'info' | 'warning' | 'success' | 'error'
+
+export interface OverlayItem {
+  key: string
+  appear: number
+  disappear: number
+  align: OverlayAlign
+  type: OverlayType
+  content: ReactNode
+  withIcon?: boolean
+}
 
