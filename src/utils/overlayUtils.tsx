@@ -1,5 +1,5 @@
 import { AlertTriangle, Info, CheckCircle2, XOctagon } from 'lucide-react'
-import Overlay from '@/components/Overlay'
+import Overlay from '@/components/common/Overlay'
 import { OverlayAlign, OverlayType } from '@/types/overlay'
 
 const baseOverlayClass =

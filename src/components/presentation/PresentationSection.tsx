@@ -2,10 +2,11 @@
 
 import { useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import Navbar from './Navbar'
-import BeforeSection from './before/BeforeSection'
-import DuringSection from './during/DuringSection'
-import AfterSection from './after/AfterSection'
+import dynamic from 'next/dynamic'
+import Navbar from '../layout/Navbar'
+const BeforeSection = dynamic(() => import('@/sections/before/BeforeSection'))
+const DuringSection = dynamic(() => import('@/sections/during/DuringSection'))
+const AfterSection = dynamic(() => import('@/sections/after/AfterSection'))
 import { useLoadingOverlay } from '@/context/LoadingOverlayContext'
 
 export default function PresentationSection() {

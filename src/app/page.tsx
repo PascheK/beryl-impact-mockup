@@ -1,6 +1,6 @@
-import HeroSection from '@/components/HeroSection'
-import RecapSection from '@/components/RecapSection'
-import PresentationSection from '@/components/PresentationSection'
+import HeroSection from '@/components/presentation/HeroSection'
+import RecapSection from '@/components/presentation/RecapSection'
+import PresentationSection from '@/components/presentation/PresentationSection'
 
 export default function HomePage() {
   return (
