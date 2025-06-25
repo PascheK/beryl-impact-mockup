@@ -1,6 +1,6 @@
 import { AlertTriangle, Info, CheckCircle2, XOctagon } from 'lucide-react'
 import Overlay from '@/components/Overlay'
-import { OverlayAlign, OverlayType } from '@/types/overlay'
+import type { OverlayAlign, OverlayType, OverlayItem } from '@/types/overlay'
 
 const baseOverlayClass = 'px-4 py-3 rounded-lg shadow-lg text-sm flex flex-col items-center gap-1 text-center sm:flex-row sm:gap-2 sm:text-left'
 
@@ -41,17 +41,7 @@ export function renderOverlay(
   )
 }
 
-export function renderOverlays(
-  items: {
-    key: string
-    appear: number
-    disappear: number
-    align: OverlayAlign
-    type: OverlayType
-    content: React.ReactNode
-    withIcon?: boolean
-  }[]
-) {
+export function renderOverlays(items: OverlayItem[]) {
   return items.map(item =>
     renderOverlay(
       item.key,

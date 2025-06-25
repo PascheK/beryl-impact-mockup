@@ -2,16 +2,21 @@
 
 import { motion } from 'framer-motion'
 import { AlertTriangle, ChevronDown } from 'lucide-react'
+import Image from 'next/image'
 
 export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="h-screen bg-cover bg-center relative flex flex-col items-center justify-center text-center px-4"
-      style={{
-        backgroundImage: 'url(/hero.jpg)', // veille à avoir une image sombre et évocatrice
-      }}
+      className="relative h-screen flex flex-col items-center justify-center text-center px-4"
     >
+      <Image
+        src="/hero.jpg"
+        alt="Satellite view of Hurricane Beryl at night"
+        fill
+        className="object-cover"
+        priority
+      />
       {/* Overlay foncé pour lisibilité */}
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm z-0" />
 

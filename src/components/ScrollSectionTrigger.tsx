@@ -16,7 +16,7 @@ export default function ScrollSectionTrigger({
   text,
   direction = 'down',
 }: ScrollSectionTriggerProps) {
-  const triggerRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
 
   useLayoutEffect(() => {
     if (!triggerRef.current) return
@@ -46,9 +46,12 @@ export default function ScrollSectionTrigger({
   const Icon = direction === 'down' ? ChevronDown : ChevronUp
 
   return (
-    <div
+    <button
       ref={triggerRef}
       className="relative w-full min-h-screen flex items-center justify-center z-10"
+      onClick={onTrigger}
+      aria-label={text}
+      type="button"
     >
       <motion.div
         initial={{ opacity: 0, y: direction === 'down' ? -20 : 20 }}
@@ -71,6 +74,6 @@ export default function ScrollSectionTrigger({
           <Icon className="w-6 h-6 md:w-7 md:h-7" />
         </motion.div>
       </motion.div>
-    </div>
+    </button>
   )
 }

@@ -8,7 +8,8 @@ type Props = {
 
 export default function Navbar({ selected, onSelect, canChangeSection, onChangeSection, onNavbarChanged }: Props) {
   const btnClass = (val: string) =>
-    `px-6 py-2 rounded-full transition ${selected === val ? 'bg-white text-black font-bold' : 'bg-black/60 text-white'
+    `px-6 py-2 rounded-full transition focus-visible:outline-none focus-visible:ring focus-visible:ring-white ${
+      selected === val ? 'bg-white text-black font-bold' : 'bg-black/60 text-white'
     }`
   const handleClick = (section: 'before' | 'during' | 'after') => {
     if (!canChangeSection || section === selected) return
@@ -17,10 +18,31 @@ export default function Navbar({ selected, onSelect, canChangeSection, onChangeS
     onSelect(section)
   }
   return (
-    <div className="flex gap-6 bg-black/30 backdrop-blur px-6 py-3 rounded-full shadow-lg ">
-      <button onClick={() => handleClick('before')} className={btnClass('before')}>Before</button>
-      <button onClick={() => handleClick('during')} className={btnClass('during')}>During</button>
-      <button onClick={() => handleClick('after')} className={btnClass('after')}>After</button>
-    </div>
+    <nav className="flex gap-6 bg-black/30 backdrop-blur px-6 py-3 rounded-full shadow-lg">
+      <button
+        onClick={() => handleClick('before')}
+        className={btnClass('before')}
+        aria-current={selected === 'before' ? 'page' : undefined}
+        type="button"
+      >
+        Before
+      </button>
+      <button
+        onClick={() => handleClick('during')}
+        className={btnClass('during')}
+        aria-current={selected === 'during' ? 'page' : undefined}
+        type="button"
+      >
+        During
+      </button>
+      <button
+        onClick={() => handleClick('after')}
+        className={btnClass('after')}
+        aria-current={selected === 'after' ? 'page' : undefined}
+        type="button"
+      >
+        After
+      </button>
+    </nav>
   )
 }
