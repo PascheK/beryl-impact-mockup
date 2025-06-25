@@ -22,7 +22,8 @@ export type OverlayProps = {
 }
 
 function getPositionClass(align?: string): string {
-  const base = 'absolute p-4 sm:p-6 w-full max-w-xs sm:max-w-md lg:max-w-xl flex flex-col items-center justify-center'
+  const base =
+    'absolute p-3 sm:p-6 w-[92vw] max-w-xs sm:max-w-md lg:max-w-xl flex flex-col items-center justify-center max-h-[90vh] overflow-y-auto'
 
   const positionMap: Record<string, string> = {
     top: 'top-4 left-1/2 -translate-x-1/2 sm:left-1/2',

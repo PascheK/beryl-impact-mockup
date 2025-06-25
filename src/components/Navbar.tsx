@@ -18,9 +18,9 @@ export default function Navbar({ selected, onSelect, canChangeSection, onChangeS
   }
   return (
     <div className="flex gap-6 bg-black/30 backdrop-blur px-6 py-3 rounded-full shadow-lg ">
-      <button onClick={() => handleClick('before')} className={btnClass('before')}>Avant</button>
-      <button onClick={() => handleClick('during')} className={btnClass('during')}>Pendant</button>
-      <button onClick={() => handleClick('after')} className={btnClass('after')}>Après</button>
+      <button onClick={() => handleClick('before')} className={btnClass('before')}>Before</button>
+      <button onClick={() => handleClick('during')} className={btnClass('during')}>During</button>
+      <button onClick={() => handleClick('after')} className={btnClass('after')}>After</button>
     </div>
   )
 }

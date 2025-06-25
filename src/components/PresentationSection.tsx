@@ -30,7 +30,6 @@ export default function PresentationSection() {
   // Handles scroll and overlay transition after section animation
   const handleAfterAnimate = () => {
     if (!lastSelected.current) {
-      console.log('No last selected section, showing overlay');
       show();
       document.body.style.overflow = 'hidden'
       lastSelected.current = selected;
@@ -97,7 +96,6 @@ export default function PresentationSection() {
               <DuringSection
                 onNext={() => {
                   if (!canChangeSection) return;
-                  console.log('during - after', canChangeSection)
                   document.body.style.overflow = 'hidden'
                   setCanChangeSection(false);
                   setSelected('after')
@@ -114,7 +112,6 @@ export default function PresentationSection() {
               <AfterSection
                 onBack={() => {
                   if (!canChangeSection) return;
-                  console.log('adter - during', canChangeSection)
                   document.body.style.overflow = 'hidden'
                   setCanChangeSection(false);
                   setSelected('during')

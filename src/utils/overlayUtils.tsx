@@ -2,8 +2,7 @@ import { AlertTriangle, Info, CheckCircle2, XOctagon } from 'lucide-react'
 import Overlay from '@/components/Overlay'
 import { OverlayAlign, OverlayType } from '@/types/overlay'
 
-const baseOverlayClass =
-  'px-4 py-3 rounded-lg shadow-lg text-sm flex items-center gap-2'
+const baseOverlayClass = 'px-4 py-3 rounded-lg shadow-lg text-sm flex flex-col items-center gap-1 text-center sm:flex-row sm:gap-2 sm:text-left'
 
 const styleMap: Record<OverlayType, string> = {
   info: 'bg-blue-500/80 text-white',

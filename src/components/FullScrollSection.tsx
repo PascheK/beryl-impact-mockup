@@ -12,10 +12,7 @@ type FullScrollSectionProps = {
   videoSrc: string
   scrollSpeed?: number
   sectionId: string
-  // Amélioration ici ↓
   overlays?: ReactElement<OverlayProps> | ReactElement<OverlayProps>[]
-
-  // Ces deux props attendent des composants React, donc :
   introSection: ReactElement
   outroSection: ReactElement
 }

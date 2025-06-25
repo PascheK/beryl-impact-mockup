@@ -1,14 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useLoadingOverlay } from '@/context/LoadingOverlayContext'
 
 // List of videos to preload
 const videoSources = ['/videos/test.mp4']
 
 export default function AppWrapper({ children }: { children: React.ReactNode }) {
   const [isReady, setIsReady] = useState(false)
-  const { show, hide } = useLoadingOverlay()
 
   useEffect(() => {
 
@@ -27,10 +25,10 @@ export default function AppWrapper({ children }: { children: React.ReactNode }) 
     }
 
     waitForVideos()
-  }, [show, hide])
+  }, [])
 
 
-  if (!isReady) return null // We already show the overlay, no need to render anything else
-
+  // Don't render children until the initial assets are preloaded
+  if (!isReady) return null
   return <>{children}</>
 }
