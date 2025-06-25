@@ -1,9 +1,9 @@
 'use client'
 
-import SectionHeader from '@/components/SectionHeader'
-import BulletPointCard from '@/components/BulletPointCard'
-import FactHighlight from '@/components/FactHighlight'
-import InfoTable from '@/components/InfoTable'
+import SectionHeader from '@/components/common/SectionHeader'
+import BulletPointCard from '@/components/common/BulletPointCard'
+import FactHighlight from '@/components/common/FactHighlight'
+import InfoTable from '@/components/common/InfoTable'
 
 export default function IntroSection() {
   return (
